@@ -1,0 +1,28 @@
+{
+	"source": {
+		"directories": [
+			"./Mezon/"
+		],
+		"excludes": [
+			"Tests"
+		]
+	},
+	"phpUnit": {
+		"customPath": ".\/vendor\/phpunit\/phpunit\/phpunit"
+	},
+	"logs": {
+		"text": ".\/tmp\/infection.txt"
+	},
+	"mutators": {
+		"@default": true,
+		"ProtectedVisibility": {
+			"ignore": [
+				"Mezon\\EntityModel::assertDataWasLoaded::83",
+				"Mezon\\EntityModel::createRecord::302",
+				"Mezon\\EntityModel::getField::160",
+				"Mezon\\EntityModel::setData::75",
+				"Mezon\\EntityModel::updateRecord::261"
+			]
+		}
+	}
+}
