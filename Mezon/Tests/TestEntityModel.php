@@ -16,7 +16,7 @@ class TestEntityModel extends EntityModel
     /**
      * Fields
      *
-     * @var array
+     * @var array<string, array{type?: string}>
      */
     protected static $fields = [
         'id' => [

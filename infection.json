@@ -19,9 +19,14 @@
 			"ignore": [
 				"Mezon\\EntityModel::assertDataWasLoaded::83",
 				"Mezon\\EntityModel::createRecord::302",
-				"Mezon\\EntityModel::getField::160",
+				"Mezon\\EntityModel::getField::163",
 				"Mezon\\EntityModel::setData::75",
 				"Mezon\\EntityModel::updateRecord::261"
+			]
+		},
+		"CastInt": {
+			"ignore": [
+				"Mezon\\EntityModel::delete::99"
 			]
 		}
 	}

@@ -27,7 +27,7 @@ class EntityModel extends DbServiceModelBase
     /**
      * Fields
      *
-     * @var array
+     * @var array<string, array{type?: string}>
      */
     protected static $fields = [];
 
@@ -59,9 +59,9 @@ class EntityModel extends DbServiceModelBase
     /**
      * Method returns entity's raw data
      *
-     * @return object entity's raw data
+     * @return ?object entity's raw data
      */
-    public function getData(): object
+    public function getData(): ?object
     {
         return $this->data;
     }
@@ -69,10 +69,10 @@ class EntityModel extends DbServiceModelBase
     /**
      * Method sets entity's data
      *
-     * @param ?object $data
+     * @param object $data
      *            setting data
      */
-    protected function setData(?object $data): void
+    protected function setData(object $data): void
     {
         $this->data = $data;
     }
@@ -96,7 +96,7 @@ class EntityModel extends DbServiceModelBase
     {
         $this->assertDataWasLoaded();
 
-        $entityId = Fetcher::getField($this->data, 'id');
+        $entityId = (int) Fetcher::getField($this->data, 'id');
 
         static::deleteById($entityId);
 
@@ -123,10 +123,10 @@ class EntityModel extends DbServiceModelBase
      *
      * @param string $fieldName
      *            field name
-     * @param string $fieldValue
+     * @param string|int $fieldValue
      *            field value
      */
-    public function setField(string $fieldName, string $fieldValue): void
+    public function setField(string $fieldName, $fieldValue): void
     {
         $this->assertDataWasLoaded();
 
@@ -140,12 +140,15 @@ class EntityModel extends DbServiceModelBase
     /**
      * Method sets fields
      *
-     * @param array $fields
+     * @param
+     *            array<string, int|string> $fields
      *            fields
      */
     public function setFields(array $fields): void
     {
+        /** @var int|string $fieldValue */
         foreach ($fields as $fieldName => $fieldValue) {
+            /** @var string $fieldName */
             $this->setField($fieldName, $fieldValue);
         }
     }
@@ -194,6 +197,7 @@ class EntityModel extends DbServiceModelBase
             throw (new \Exception('Record with the id ' . $id . ' was not found', - 1));
         }
 
+        /** @var object[] $data */
         $this->setData($data[0]);
     }
 
@@ -220,10 +224,10 @@ class EntityModel extends DbServiceModelBase
      *
      * @param string $field
      *            field name
-     * @param string $value
+     * @param string|int $value
      *            field value
      */
-    private function bindParameter(string $field, string $value): void
+    private function bindParameter(string $field, $value): void
     {
         switch ($this->fieldsSet->getFieldType($field)) {
             case ('int'):
@@ -240,12 +244,15 @@ class EntityModel extends DbServiceModelBase
     /**
      * Binding parameters
      *
-     * @param string[] $record
+     * @param
+     *            array<string, int|string> $record
      *            record
      */
     private function bindParameters(array $record): void
     {
+        /** @var int|string $value */
         foreach ($record as $field => $value) {
+            /** @var string $field */
             $this->bindParameter($field, $value);
         }
     }
@@ -253,7 +260,8 @@ class EntityModel extends DbServiceModelBase
     /**
      * Method updates record
      *
-     * @param string[] $record
+     * @param
+     *            array<string, int|string> $record
      *            record with the updating data
      */
     protected function updateRecord(array $record): void
@@ -273,7 +281,8 @@ class EntityModel extends DbServiceModelBase
     /**
      * Compiling VALUES query
      *
-     * @param string[] $record
+     * @param
+     *            array<string, int|string> $record
      *            record
      * @return string VALUES query
      */
@@ -291,7 +300,8 @@ class EntityModel extends DbServiceModelBase
     /**
      * Creating record
      *
-     * @param string[] $record
+     * @param
+     *            array<string, string|int> $record
      *            record to be created
      * @return int id of the created record
      */
